@@ -8,6 +8,9 @@ import { SharedModule } from './shared/shared.module';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { OwnersComponent } from './shared/components/owners/owners.component';
 import { CarsComponent } from './shared/components/cars/cars.component';
+import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -15,12 +18,15 @@ import { CarsComponent } from './shared/components/cars/cars.component';
     MainLayoutComponent,
     OwnersComponent,
     CarsComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
