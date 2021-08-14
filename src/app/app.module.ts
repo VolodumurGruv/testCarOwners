@@ -11,6 +11,7 @@ import { CarsComponent } from './shared/components/cars/cars.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     MatButtonModule,
     MatIconModule,

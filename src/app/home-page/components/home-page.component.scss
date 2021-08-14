@@ -1,1 +1,33 @@
+.buttons {
+  a {
+    margin-left: 10px;
+  }
 
+  .btn-field {
+    padding-right: 15px;
+  }
+}
+
+.buttons :first-child {
+  margin-right: 10%;
+}
+
+.chosen-row {
+  background-color: grey;
+  font-weight: bold;
+  .mat-cell {
+    color: white;
+  }
+}
+
+.mat-cell {
+  font-size: 20px;
+}
+
+.table {
+  width: 100%S;
+}
+
+.hide {
+  display: none;
+}

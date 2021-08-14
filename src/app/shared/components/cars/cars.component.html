@@ -1,1 +1,22 @@
-<p>cars works!</p>
+<div class="car-group" [formGroup]="carsForm">
+  <h2>Автомобили</h2>
+  <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+    <mat-label>Номер</mat-label>
+    <input matInput formControlName="regNumber" required />
+  </mat-form-field>
+  <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+    <mat-label>Марка</mat-label>
+    <input matInput formControlName="brand" required />
+  </mat-form-field>
+  <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+    <mat-label>Модель</mat-label>
+    <input matInput formControlName="model" required />
+  </mat-form-field>
+  <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+    <mat-label>Год</mat-label>
+    <input matInput formControlName="prodYear" required />
+  </mat-form-field>
+  <button mat-raised-button color="warn" class="btn-delete" type="button">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
+</div>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
+import { OwnersComponent } from './shared/components/owners/owners.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,14 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () =>
           import('./edit-page/edit-page.module').then((m) => m.EditPageModule),
+      },
+      {
+        path: 'add',
+        loadChildren: () => import('./add/add.module').then((m) => m.AddModule),
+      },
+      {
+        path: 'view/:id',
+        component: OwnersComponent,
       },
       {
         path: '**',

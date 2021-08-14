@@ -1,6 +1,6 @@
 export interface Cars {
   _id: string;
-  indNumber: string;
+  regNumber: string;
   brand: string;
   model: string;
   prodYear: number;
