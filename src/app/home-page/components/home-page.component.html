@@ -3,18 +3,27 @@
     <mat-icon>add</mat-icon>
     <span class="btn-field">Добавить</span>
   </a>
-  <a [routerLink]="['/view/{{isSelected}}']" mat-raised-button>
+  <a
+    [routerLink]="['/view', isSelected]"
+    mat-raised-button
+    [disabled]="!isSelected"
+  >
     <mat-icon>visibility</mat-icon>
     <span class="btn-field">Просмотр </span>
   </a>
-  <a [routerLink]="['/edit']" mat-raised-button>
+
+  <a
+    [routerLink]="['/edit', isSelected]"
+    mat-raised-button
+    [disabled]="!isSelected"
+  >
     <mat-icon>edit</mat-icon>
     <span class="btn-field">Редактировать</span>
   </a>
-  <a [routerLink]="['/delete']" mat-raised-button>
+  <button (click)="delete()" mat-raised-button [disabled]="!isSelected">
     <mat-icon>delete_forever</mat-icon>
     <span class="btn-field">Удалить</span>
-  </a>
+  </button>
 </div>
 
 <div class="mt-3">

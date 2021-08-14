@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Owners } from 'src/app/shared/models/owners.interface';
+import { ClientService } from 'src/app/shared/services/client.service';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'surname',
@@ -16,44 +17,34 @@ export class HomePageComponent {
     'cars',
   ];
 
-  myDataArray: Owners[] = [
-    {
-      _id: '1',
-      surname: 'Ivanov',
-      firstName: 'Vasya',
-      lastName: 'Petrovich',
-      cars: ['5'],
-    },
-    {
-      _id: '2',
-      surname: 'Sidorov',
-      firstName: 'Petya',
-      lastName: 'Ivanovich',
-      cars: ['5', '7'],
-    },
-  ];
+  myDataArray = [];
 
   isSelected: any;
   row: any;
+  dataSource = new MatTableDataSource<Owners[]>(this.myDataArray);
 
-  dataSource = new MatTableDataSource(this.myDataArray);
-
-  chosen = new Set<Owners>();
+  // chosen = new Set<Owners>();
 
   // MATSORT doesnt't work will find out later
   // @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {}
+  constructor(private clientService: ClientService) {}
+
+  ngOnInit() {
+    console.log(this.clientService.getOwners);
+  }
 
   ngAfterViewInit() {
     // this.dataSource.sort = this.sort;
   }
 
+  delete() {}
+
   highLight(row: any) {
     if (this.isSelected !== row._id) {
       this.isSelected = row._id;
     } else {
-      this.isSelected = '';
+      this.isSelected = null;
     }
   }
 }

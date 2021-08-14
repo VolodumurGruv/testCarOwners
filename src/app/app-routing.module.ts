@@ -15,7 +15,7 @@ const routes: Routes = [
           import('./home-page/home-page.module').then((m) => m.HomePageModule),
       },
       {
-        path: 'edit',
+        path: 'edit/:id',
         loadChildren: () =>
           import('./edit-page/edit-page.module').then((m) => m.EditPageModule),
       },
