@@ -28,7 +28,6 @@ export class ClientService {
   ): Observable<Owners[]> {
     const owner = { id, aLastName, aFirstName, aMiddleName, aCars: [aCars] };
     return this.httpClient.post<Owners[]>('api/owners', owner).pipe(
-      tap((b) => console.log(b)),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
 

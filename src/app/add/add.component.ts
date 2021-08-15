@@ -1,16 +1,7 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UUID } from 'angular2-uuid';
-import { InMemService } from '../shared/helpers/inmem.service';
-import { Cars } from '../shared/models/cars.interface';
-import { Owners } from '../shared/models/owners.interface';
 import { ClientService } from '../shared/services/client.service';
 
 @Component({
@@ -19,7 +10,6 @@ import { ClientService } from '../shared/services/client.service';
   styleUrls: ['./add.component.scss'],
 })
 export class AddComponent implements OnInit {
-  counters: number[] = [0];
   owners: any;
 
   formGroup = new FormGroup({
@@ -37,49 +27,26 @@ export class AddComponent implements OnInit {
     ]),
   });
 
-  constructor(
-    private clientService: ClientService,
-    private inmem: InMemService,
-    private router: Router,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private clientService: ClientService, private router: Router) {}
 
   ngOnInit() {
     this.getOwners();
   }
 
   getOwners() {
-    return this.clientService.getOwners().subscribe((b) => this.inmem.genId(b));
+    return this.clientService.getOwners().subscribe((b) => (this.owners = b));
   }
 
   onSubmit() {
     const { aLastName, aFirstName, aMiddleName, aCars } = this.formGroup.value;
-    this.clientService.getOwners().subscribe((b) => (this.owners = b));
 
-    let id = 0;
-
-    // const id: number = this.inmem.genId(this.getCars());
+    let id = this.owners.length;
 
     this.clientService
-      .createOwner(++id, aLastName, aFirstName, aMiddleName, aCars)
+      .createOwner(id, aLastName, aFirstName, aMiddleName, aCars)
       .subscribe();
 
-    this.router.navigate(['/']);
-  }
-
-  saveOwner() {
-    const { aLastName, aFirstName, aMiddleName, aCars } = this.formGroup.value;
-    this.clientService.getOwners().subscribe((b) => (this.owners = b));
-
-    let id = 0;
-
-    // const id: number = this.inmem.genId(this.getCars());
-
-    this.clientService
-      .createOwner(++id, aLastName, aFirstName, aMiddleName, aCars)
-      .subscribe();
-
-    this.router.navigate(['/']);
+    setTimeout(() => this.router.navigate(['/']), 10000);
   }
 
   // adding new fields for cars
@@ -104,8 +71,8 @@ export class AddComponent implements OnInit {
     );
   }
 
-  deleteCar() {
-    // this.counters.splice(i, 1);
+  deleteCar(i: number) {
+    this.getCars().splice(i, 1);
   }
 
   getErrorMessage() {
