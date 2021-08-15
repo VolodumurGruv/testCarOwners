@@ -1,5 +1,4 @@
-import { compileDeclareNgModuleFromMetadata } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -7,48 +6,95 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UUID } from 'angular2-uuid';
+import { Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { CarsComponent } from '../shared/components/cars/cars.component';
+import { InMemService } from '../shared/helpers/inmem.service';
 import { Cars } from '../shared/models/cars.interface';
+import { Owners } from '../shared/models/owners.interface';
+import { ClientService } from '../shared/services/client.service';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
-export class AddComponent implements OnInit {
-  counters: number[] = [];
+export class AddComponent implements OnInit, OnChanges {
+  counters: number[] = [0];
+  owners: any;
 
   formGroup = new FormGroup({
-    surname: new FormControl('', [Validators.required]),
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    cars: new FormGroup({
-      regNumber: new FormControl(''),
-      brand: new FormControl(''),
-      model: new FormControl(''),
-      prodYear: new FormControl(''),
-    }),
+    aLastName: new FormControl('', [Validators.required]),
+    aFirstName: new FormControl('', [Validators.required]),
+    aMiddleName: new FormControl('', [Validators.required]),
+    aCars: new FormArray([
+      new FormGroup({
+        regNumber: new FormControl(''),
+        brand: new FormControl(''),
+        model: new FormControl(''),
+        prodYear: new FormControl(''),
+      }),
+    ]),
   });
 
-  constructor() {}
+  constructor(
+    private clientService: ClientService,
+    private inmem: InMemService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.getCars());
+    console.log(this.formGroup.controls.aCars);
+  }
+
+  ngOnChanges() {}
+
+  getOwners() {
+    return this.clientService.getOwners().subscribe((b) => (this.owners = b));
+  }
 
   onSubmit() {}
-  // console.log(UUID.UUID());
+
+  saveOwner() {
+    const { aLastName, aFirstName, aMiddleName, aCars } = this.formGroup.value;
+    this.clientService.getOwners().subscribe((b) => (this.owners = b));
+
+    let id = 0;
+
+    // const id: number = this.inmem.genId(this.getCars());
+
+    this.clientService
+      .createOwner(id, aLastName, aFirstName, aMiddleName, aCars)
+      .subscribe();
+
+    this.router.navigate(['/']);
+  }
 
   // adding new fields for cars
-  get isCars() {
-    return this.formGroup.get('cars') as FormControl;
+
+  getCars() {
+    return (this.formGroup.get('aCars') as FormArray).controls;
   }
 
-  addCar() {
-    this.counters.push(0);
+  addCar($event: any) {
+    $event.preventDefault();
+
+    (this.formGroup.controls.aCars as FormArray).push(
+      new FormGroup({
+        regNumber: new FormArray([new FormControl('')]),
+        brand: new FormArray([new FormControl('')]),
+        model: new FormArray([new FormControl('')]),
+        prodYear: new FormArray([new FormControl('')]),
+      })
+    );
   }
 
-  deleteCar(i: any) {
-    console.log(i);
-    this.counters.splice(i, 1);
+  deleteCar() {
+    // this.counters.splice(i, 1);
   }
 
   getErrorMessage() {

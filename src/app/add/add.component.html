@@ -3,8 +3,13 @@
     <p>
       <mat-form-field [hideRequiredMarker]="true" appearance="fill">
         <mat-label>Фамилия</mat-label>
-        <input class="mat-input" matInput formControlName="surname" required />
-        <mat-error *ngIf="formGroup.get('surname')?.invalid">{{
+        <input
+          class="mat-input"
+          matInput
+          formControlName="aLastName"
+          required
+        />
+        <mat-error *ngIf="formGroup.get('aLastName')?.invalid">{{
           getErrorMessage()
         }}</mat-error>
       </mat-form-field>
@@ -15,10 +20,10 @@
         <input
           class="mat-input"
           matInput
-          formControlName="firstName"
+          formControlName="aFirstName"
           required
         />
-        <mat-error *ngIf="formGroup.get('firstName')?.invalid">{{
+        <mat-error *ngIf="formGroup.get('aFirstName')?.invalid">{{
           getErrorMessage()
         }}</mat-error>
       </mat-form-field>
@@ -26,49 +31,58 @@
     <p>
       <mat-form-field [hideRequiredMarker]="true" appearance="fill">
         <mat-label>Отчество</mat-label>
-        <input class="mat-input" matInput formControlName="lastName" required />
-        <mat-error *ngIf="formGroup.get('lastName')?.invalid">{{
+        <input
+          class="mat-input"
+          matInput
+          formControlName="aMiddleName"
+          required
+        />
+        <mat-error *ngIf="formGroup.get('aMiddleName')?.invalid">{{
           getErrorMessage()
         }}</mat-error>
       </mat-form-field>
     </p>
-    <div class="car-group" formGroupName="cars">
-      <h2>Автомобили</h2>
-      <div *ngFor="let counter of counters; let i = index">
-        <mat-form-field [hideRequiredMarker]="true" appearance="fill">
-          <mat-label>Номер</mat-label>
-          <input matInput formControlName="regNumber" required />
-        </mat-form-field>
-        <mat-form-field [hideRequiredMarker]="true" appearance="fill">
-          <mat-label>Марка</mat-label>
-          <input matInput formControlName="brand" required />
-        </mat-form-field>
-        <mat-form-field [hideRequiredMarker]="true" appearance="fill">
-          <mat-label>Модель</mat-label>
-          <input matInput formControlName="model" required />
-        </mat-form-field>
-        <mat-form-field [hideRequiredMarker]="true" appearance="fill">
-          <mat-label>Год</mat-label>
-          <input matInput formControlName="prodYear" required />
-        </mat-form-field>
 
+    <div class="car-group" formArrayName="aCars">
+      <h2>Автомобили</h2>
+      <div *ngFor="let item of getCars(); let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Номер</mat-label>
+            <input matInput formControlName="regNumber" required />
+          </mat-form-field>
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Марка</mat-label>
+            <input matInput formControlName="brand" required />
+          </mat-form-field>
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Модель</mat-label>
+            <input matInput formControlName="model" required />
+          </mat-form-field>
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Год</mat-label>
+            <input matInput formControlName="prodYear" required />
+          </mat-form-field>
+        </div>
         <button
           mat-raised-button
           color="warn"
           class="btn-delete"
           type="button"
-          (click)="deleteCar(i)"
+          (click)="deleteCar()"
         >
           <mat-icon>delete_forever</mat-icon>
         </button>
       </div>
     </div>
+
     <p>
-      <button class="btn btn-primary" type="button" (click)="addCar()">
+      <button class="btn btn-primary" type="button" (click)="addCar($event)">
         <mat-icon>add</mat-icon> Добавить автомобиль
       </button>
     </p>
     <button
+      (click)="saveOwner()"
       mat-raised-button
       color="primary"
       type="submit"

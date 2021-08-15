@@ -1,25 +1,17 @@
 <div class="buttons">
-  <a [routerLink]="['/add']" mat-raised-button>
+  <button [routerLink]="['/add']" mat-raised-button>
     <mat-icon>add</mat-icon>
     <span class="btn-field">Добавить</span>
-  </a>
-  <a
-    [routerLink]="['/view', isSelected]"
-    mat-raised-button
-    [disabled]="!isSelected"
-  >
+  </button>
+  <button (click)="goToView()" mat-raised-button [disabled]="!isSelected">
     <mat-icon>visibility</mat-icon>
     <span class="btn-field">Просмотр </span>
-  </a>
+  </button>
 
-  <a
-    [routerLink]="['/edit', isSelected]"
-    mat-raised-button
-    [disabled]="!isSelected"
-  >
+  <button (click)="goToEdit()" mat-raised-button [disabled]="!isSelected">
     <mat-icon>edit</mat-icon>
     <span class="btn-field">Редактировать</span>
-  </a>
+  </button>
   <button (click)="delete()" mat-raised-button [disabled]="!isSelected">
     <mat-icon>delete_forever</mat-icon>
     <span class="btn-field">Удалить</span>
@@ -31,38 +23,38 @@
     <!-- ID column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row._id }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
     </ng-container>
     <!-- Surname column -->
-    <ng-container matColumnDef="surname">
+    <ng-container matColumnDef="aLastName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Фамилия</th>
-      <td mat-cell *matCellDef="let row">{{ row.surname }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.aLastName }}</td>
     </ng-container>
     <!-- Firstname column -->
-    <ng-container matColumnDef="firstName">
+    <ng-container matColumnDef="aFirstName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Имя</th>
-      <td mat-cell *matCellDef="let row">{{ row.firstName }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.aFirstName }}</td>
     </ng-container>
     <!-- Lastname column -->
-    <ng-container matColumnDef="lastName">
+    <ng-container matColumnDef="aMiddleName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Отчество</th>
-      <td mat-cell *matCellDef="let row">{{ row.lastName }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.aMiddleName }}</td>
     </ng-container>
     <!-- Amount of cars column -->
-    <ng-container matColumnDef="cars">
+    <ng-container matColumnDef="aCars">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Количество автомобилей
       </th>
-      <td mat-cell *matCellDef="let row">{{ row.cars.length }}</td>
+      <td mat-cell *matCellDef="let row">{{ [row.cars].length }}</td>
     </ng-container>
 
     <!-- define rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <!-- (click)="chosen.has(row) ? chosen.delete(row) : chosen.add(row)" -->
+
     <tr
       mat-row
       (click)="highLight(row)"
-      [class.chosen-row]="isSelected == row._id"
+      [class.chosen-row]="isSelected == row.id"
       *matRowDef="let row; columns: displayedColumns"
     ></tr>
     <!-- row shown when there is no matching data  -->

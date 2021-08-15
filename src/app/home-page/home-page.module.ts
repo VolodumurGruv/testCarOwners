@@ -7,10 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [HomePageComponent],
   imports: [
+    CommonModule,
     HomePageRoutingModule,
     MatButtonModule,
     MatIconModule,
