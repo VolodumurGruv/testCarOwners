@@ -45,7 +45,11 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Количество автомобилей
       </th>
-      <td mat-cell *matCellDef="let row">{{ [row.cars].length }}</td>
+      <td mat-cell *matCellDef="let row">
+        <span *ngFor="let car of row.aCars; let i = index">
+          {{ row.aCars[i].length }}</span
+        >
+      </td>
     </ng-container>
 
     <!-- define rows -->
