@@ -19,6 +19,17 @@ export class ClientService {
     );
   }
 
+  getOwnerById(id: number) {
+    return this.httpClient.get<Owners[]>(`api/owners/${id}`).pipe(
+      retry(2),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+
+        return throwError(error);
+      })
+    );
+  }
+
   createOwner(
     id: number,
     aLastName: string,
@@ -41,6 +52,13 @@ export class ClientService {
   }
 
   deleteOwner(id: number): Observable<any> {
-    return this.httpClient.delete(`api/owners/${id}`);
+    return this.httpClient.delete<void>(`api/owners/${id}`).pipe(
+      retry(1),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+
+        return throwError(error);
+      })
+    );
   }
 }

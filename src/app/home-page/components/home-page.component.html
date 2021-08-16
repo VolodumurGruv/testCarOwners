@@ -1,3 +1,8 @@
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+</mat-form-field>
+
 <div class="buttons">
   <button [routerLink]="['/add']" mat-raised-button>
     <mat-icon>add</mat-icon>
@@ -57,6 +62,7 @@
 
     <tr
       mat-row
+      #row.id
       (click)="highLight(row)"
       [class.chosen-row]="isSelected == row.id"
       *matRowDef="let row; columns: displayedColumns"

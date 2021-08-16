@@ -63,16 +63,16 @@
             <mat-label>Год</mat-label>
             <input matInput formControlName="prodYear" required />
           </mat-form-field>
+          <button
+            mat-raised-button
+            color="warn"
+            class="btn-delete"
+            type="button"
+            (click)="deleteCar(i)"
+          >
+            <mat-icon>delete_forever</mat-icon>
+          </button>
         </div>
-        <button
-          mat-raised-button
-          color="warn"
-          class="btn-delete"
-          type="button"
-          (click)="deleteCar(i)"
-        >
-          <mat-icon>delete_forever</mat-icon>
-        </button>
       </div>
     </div>
 

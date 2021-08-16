@@ -46,7 +46,7 @@ export class AddComponent implements OnInit {
       .createOwner(id, aLastName, aFirstName, aMiddleName, aCars)
       .subscribe();
 
-    setTimeout(() => this.router.navigate(['/']), 10000);
+    this.router.navigate(['/']);
   }
 
   // adding new fields for cars
