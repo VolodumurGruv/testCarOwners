@@ -72,14 +72,6 @@ export class EditPageComponent implements OnInit {
       aLastName: owner.aLastName,
       aFirstName: owner.aFirstName,
       aMiddleName: owner.aMiddleName,
-      // aCars: owner.aCars.map((elem: any) => {
-      //   return {
-      //     regNumber: [elem.regNumber],
-      //     brand: [elem.brand],
-      //     model: [elem.model],
-      //     prodYear: [elem.prodYear],
-      //   };
-      // }),
     });
 
     this.formGroup.setControl('aCars', this.setAcars(owner.aCars as []));
@@ -122,8 +114,9 @@ export class EditPageComponent implements OnInit {
   onSubmit() {
     const { aLastName, aFirstName, aMiddleName, aCars } = this.formGroup.value;
 
-    this.clientService.editOwner(this.formGroup.value, this.id).subscribe();
-
-    this.router.navigate(['/']);
+    this.clientService
+      .editOwner(this.formGroup.value, this.id)
+      .subscribe((b) => console.log(b));
+    setTimeout(() => this.router.navigate(['/']), 10000);
   }
 }

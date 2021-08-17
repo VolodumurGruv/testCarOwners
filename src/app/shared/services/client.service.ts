@@ -61,9 +61,9 @@ export class ClientService {
     );
   }
 
-  editOwner(owner: Owners, id: number): Observable<any> {
+  editOwner(owner: Owners, id: number): Observable<Owners[]> {
     console.log(owner);
-    return this.httpClient.put(`${this.URL}/${id}`, owner);
+    return this.httpClient.put<Owners[]>(`${this.URL}/${id}`, owner);
   }
 
   deleteOwner(id: number): Observable<Owners[]> {
