@@ -38,14 +38,14 @@ export class HomePageComponent implements OnInit {
     this.getOwners();
 
     setTimeout(() => {
-      this.myDataArray.filter((el: any) => (el.id ? true : false));
+      this.myDataArray.splice(0, 1);
 
       this.dataSource = new MatTableDataSource<Owners[]>(this.myDataArray);
     }, 500);
   }
 
   ngAfterViewInit() {
-    setTimeout(() => (this.dataSource.sort = this.sort), 3000);
+    setTimeout(() => (this.dataSource.sort = this.sort), 1000);
   }
 
   private getOwners() {

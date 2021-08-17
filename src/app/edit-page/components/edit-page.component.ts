@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { Cars } from 'src/app/shared/models/cars.interface';
 import { ClientService } from 'src/app/shared/services/client.service';
 
@@ -49,8 +50,7 @@ export class EditPageComponent implements OnInit {
           aMiddleName: [owner?.aMiddleName, [Validators.required]],
           aCars: this.formBuilder.array([
             this.cars.map((car: any) => {
-              console.log(car?.brand);
-              this.formBuilder.group({
+              return this.formBuilder.group({
                 regNumber: new FormControl(car?.regNumber),
                 brand: new FormControl(car?.brand),
                 model: new FormControl(car?.model),
@@ -60,6 +60,8 @@ export class EditPageComponent implements OnInit {
           ]),
         });
       });
+
+    this.formGroup.patchValue({ aFirstName: 'Name' });
   }
 
   getCars() {
