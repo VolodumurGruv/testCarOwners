@@ -1,4 +1,3 @@
-import { splitClasses } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -7,9 +6,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cars } from 'src/app/shared/models/cars.interface';
+import { Owners } from 'src/app/shared/models/owners.interface';
 import { ClientService } from 'src/app/shared/services/client.service';
 
 @Component({
@@ -32,40 +31,75 @@ export class EditPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params
-      .pipe((p: Params) => {
-        this.id = +p.value['id'];
-        return this.clientService.getOwnerById(p.value['id']);
-      })
-      .subscribe((owner: any) => {
-        this.owner = owner;
+    this.formGroup = this.formBuilder.group({
+      aLastName: ['', [Validators.required]],
+      aFirstName: ['', [Validators.required]],
+      aMiddleName: ['', [Validators.required]],
+      aCars: this.formBuilder.array([
+        this.formBuilder.group({
+          regNumber: new FormControl(''),
+          brand: new FormControl(''),
+          model: new FormControl(''),
+          prodYear: new FormControl(''),
+        }),
+      ]),
+    });
 
-        this.cars = owner.aCars;
+    this.formGroup.valueChanges.subscribe((b) => b);
 
-        console.log(this.cars);
+    this.route.paramMap.subscribe((param) => {
+      this.id = param.get('id');
 
-        this.formGroup = this.formBuilder.group({
-          aLastName: [owner?.aLastName, [Validators.required]],
-          aFirstName: [owner?.aFirstName, [Validators.required]],
-          aMiddleName: [owner?.aMiddleName, [Validators.required]],
-          aCars: this.formBuilder.array([
-            this.cars.map((car: any) => {
-              return this.formBuilder.group({
-                regNumber: new FormControl(car?.regNumber),
-                brand: new FormControl(car?.brand),
-                model: new FormControl(car?.model),
-                prodYear: new FormControl(car?.prodYear),
-              });
-            }),
-          ]),
-        });
-      });
+      if (this.id) {
+        this.getOwner(this.id);
+      }
+    });
+  }
 
-    this.formGroup.patchValue({ aFirstName: 'Name' });
+  private getOwner(id: number) {
+    this.clientService.getOwnerById(id).subscribe(
+      (owner) => this.editOwner(owner),
+      (err: any) => console.log(err)
+    );
   }
 
   getCars() {
     return (this.formGroup.get('aCars') as FormArray).controls;
+  }
+
+  editOwner(owner: Owners) {
+    this.formGroup.patchValue({
+      aLastName: owner.aLastName,
+      aFirstName: owner.aFirstName,
+      aMiddleName: owner.aMiddleName,
+      // aCars: owner.aCars.map((elem: any) => {
+      //   return {
+      //     regNumber: [elem.regNumber],
+      //     brand: [elem.brand],
+      //     model: [elem.model],
+      //     prodYear: [elem.prodYear],
+      //   };
+      // }),
+    });
+
+    this.formGroup.setControl('aCars', this.setAcars(owner.aCars as []));
+  }
+
+  setAcars(cars: Cars[]): FormArray {
+    const newCarsArray = new FormArray([]);
+
+    cars.forEach((car) =>
+      newCarsArray.push(
+        this.formBuilder.group({
+          regNumber: [car.regNumber],
+          brand: [car.brand],
+          model: [car.model],
+          prodYear: [car.prodYear],
+        })
+      )
+    );
+
+    return newCarsArray;
   }
 
   addCar() {

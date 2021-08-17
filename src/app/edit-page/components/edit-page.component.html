@@ -46,6 +46,7 @@
     <div class="car-group" formArrayName="aCars">
       <h2>Автомобили</h2>
       <div *ngFor="let item of getCars(); let i = index">
+        {{ i }}
         <div [formGroupName]="i">
           <mat-form-field [hideRequiredMarker]="true" appearance="fill">
             <mat-label>Номер</mat-label>

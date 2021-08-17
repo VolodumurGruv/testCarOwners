@@ -1,7 +1,9 @@
 <mat-card *ngFor="let item of owner; let i = index">
   <mat-card-header>
     <mat-card-title>
-      {{ item?.aLastName }} {{ item?.aFirstName }} {{ item?.aMiddleName }}
+      <div>Фамилия: {{ item?.aLastName }}</div>
+      <div>Имя: {{ item?.aFirstName }}</div>
+      <div>Отчевство: {{ item?.aMiddleName }}</div>
     </mat-card-title>
   </mat-card-header>
 </mat-card>
