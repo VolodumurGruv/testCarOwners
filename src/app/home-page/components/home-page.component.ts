@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { filter, map, tap } from 'rxjs/operators';
+import { OwnersComponent } from 'src/app/shared/components/owners/owners.component';
 import { Owners } from 'src/app/shared/models/owners.interface';
 import { ClientService } from 'src/app/shared/services/client.service';
 
@@ -36,10 +38,10 @@ export class HomePageComponent implements OnInit {
     this.getOwners();
 
     setTimeout(() => {
-      this.myDataArray.splice(0, 1);
+      this.myDataArray.filter((el: any) => (el.id ? true : false));
 
       this.dataSource = new MatTableDataSource<Owners[]>(this.myDataArray);
-    }, 2000);
+    }, 500);
   }
 
   ngAfterViewInit() {
@@ -47,29 +49,25 @@ export class HomePageComponent implements OnInit {
   }
 
   private getOwners() {
-    this.clientService.getOwners().subscribe((res) => (this.myDataArray = res));
+    return this.clientService
+      .getOwners()
+      .subscribe((res) => (this.myDataArray = res));
   }
 
   goToView() {
-    this.router.navigate(['edit/', this.isSelected]);
-  }
-
-  goToEdit() {
     this.router.navigate(['view/', this.isSelected]);
   }
 
-  delete() {
-    const id = this.isSelected - 1;
+  goToEdit() {
+    this.router.navigate(['edit/', this.isSelected]);
+  }
 
-    console.log(this.myDataArray);
+  delete() {
+    const id = this.isSelected;
 
     this.clientService.deleteOwner(id).subscribe(() => {
-      this.myDataArray.filter((data: any) => data.id != id);
-      this.clientService.getOwners().subscribe((res) => {
-        res.splice(id, 1);
-        this.myDataArray = res;
-        console.log(this.myDataArray);
-      });
+      this.myDataArray.splice(id, 1);
+      this.clientService.save(this.myDataArray).subscribe();
     });
   }
 

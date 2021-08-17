@@ -1,1 +1,97 @@
+<div class="container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+        <mat-label>Фамилия</mat-label>
+        <input
+          class="mat-input"
+          matInput
+          formControlName="aLastName"
+          required
+        />
+        <mat-error *ngIf="formGroup.get('aLastName')?.invalid">{{
+          getErrorMessage()
+        }}</mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+        <mat-label>Имя</mat-label>
+        <input
+          class="mat-input"
+          matInput
+          formControlName="aFirstName"
+          required
+        />
+        <mat-error *ngIf="formGroup.get('aFirstName')?.invalid">{{
+          getErrorMessage()
+        }}</mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+        <mat-label>Отчество</mat-label>
+        <input
+          class="mat-input"
+          matInput
+          formControlName="aMiddleName"
+          required
+        />
+        <mat-error *ngIf="formGroup.get('aMiddleName')?.invalid">{{
+          getErrorMessage()
+        }}</mat-error>
+      </mat-form-field>
+    </p>
 
+    <div class="car-group" formArrayName="aCars">
+      <h2>Автомобили</h2>
+      <div *ngFor="let item of getCars(); let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Номер</mat-label>
+            <input matInput formControlName="regNumber" required />
+          </mat-form-field>
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Марка</mat-label>
+            <input matInput formControlName="brand" required />
+          </mat-form-field>
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Модель</mat-label>
+            <input matInput formControlName="model" required />
+          </mat-form-field>
+          <mat-form-field [hideRequiredMarker]="true" appearance="fill">
+            <mat-label>Год</mat-label>
+            <input matInput formControlName="prodYear" required />
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="warn"
+            class="btn-delete"
+            type="button"
+            (click)="deleteCar(i)"
+          >
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      <button class="btn btn-primary" type="button" (click)="addCar()">
+        <mat-icon>add</mat-icon> Добавить автомобиль
+      </button>
+    </p>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="formGroup.invalid"
+    >
+      Сохранить
+    </button>
+    <a class="btn-back" mat-raised-button [routerLink]="['/']">
+      <mat-icon>arrow_back</mat-icon>
+      Назад
+    </a>
+  </form>
+</div>

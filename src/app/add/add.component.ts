@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UUID } from 'angular2-uuid';
 import { ClientService } from '../shared/services/client.service';
 
 @Component({
@@ -18,7 +17,6 @@ export class AddComponent implements OnInit {
     aMiddleName: new FormControl('', [Validators.required]),
     aCars: new FormArray([
       new FormGroup({
-        id: new FormControl(`${this.getID()}`),
         regNumber: new FormControl(''),
         brand: new FormControl(''),
         model: new FormControl(''),
@@ -55,14 +53,9 @@ export class AddComponent implements OnInit {
     return (this.formGroup.get('aCars') as FormArray).controls;
   }
 
-  getID() {
-    return UUID.UUID();
-  }
-
   addCar() {
     (this.formGroup.controls.aCars as FormArray).push(
       new FormGroup({
-        id: new FormControl(`${this.getID()}`),
         regNumber: new FormControl(''),
         brand: new FormControl(''),
         model: new FormControl(''),

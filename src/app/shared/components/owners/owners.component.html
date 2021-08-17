@@ -1,1 +1,5 @@
-<p>owners works!</p>
+<mat-card *ngFor="let item of owner; let i = index">
+  <mat-card-header>
+    <mat-card-title> {{ item.aLastName }} </mat-card-title>
+  </mat-card-header>
+</mat-card>

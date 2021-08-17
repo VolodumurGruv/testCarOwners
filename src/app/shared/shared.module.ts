@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemService } from './helpers/inmem.service';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -27,6 +28,7 @@ import { InMemService } from './helpers/inmem.service';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatCardModule,
   ],
 })
 export class SharedModule {}
