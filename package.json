@@ -12,8 +12,11 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mogoose": "^0.0.1-security"
+    "g": "^2.0.1",
+    "mogoose": "^0.0.1-security",
+    "npm": "^7.21.1"
   }
 }
