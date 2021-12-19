@@ -93,8 +93,6 @@ router.route("/edit/:id").put((req, res) => {
 				}
 			});
 
-			console.log(id === owners[pos].id);
-
 			if (id === owners[pos].id) {
 				owners[pos] = owner;
 			}
